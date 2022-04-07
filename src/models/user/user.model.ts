@@ -22,4 +22,28 @@ export class UserModel {
       throw new Error("Couldn't create user");
     }
   }
+
+  async index(): Promise<User[]> {
+    try {
+      const db = await pool.connect();
+      const sql = 'SELECT id, firstname, lastname, email FROM users';
+      const result = await db.query(sql);
+      db.release();
+      return result.rows;
+    } catch (error) {
+      throw new Error('Error retreiving users');
+    }
+  }
+
+  async show(id: string): Promise<User> {
+    try {
+      const db = await pool.connect();
+      const sql = 'SELECT id, firstname, lastname, email FROM users WHERE id=($1)';
+      const result = await db.query(sql, [id]);
+      db.release();
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(`Error retreiving user with id ${id}`);
+    }
+  }
 }

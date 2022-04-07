@@ -27,4 +27,28 @@ usersRoute.post(
   }
 );
 
+usersRoute.get(
+  '/',
+  async (req: express.Request, res: express.Response, next: NextFunction): Promise<void> => {
+    try {
+      const usersList = await userModel.index();
+      res.json(usersList);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+usersRoute.get(
+  '/:id',
+  async (req: express.Request, res: express.Response, next: NextFunction): Promise<void> => {
+    try {
+      const user = await userModel.show(req.params.id);
+      res.json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export default usersRoute;
