@@ -1,5 +1,7 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
 import morgan from 'morgan';
+import routes from './routes';
+
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -11,11 +13,7 @@ const app: Application = express();
 app.use(morgan('short'));
 
 // add routing for / path
-app.get('/', (req: Request, res: Response) => {
-  res.json({
-    message: 'Hello World 🌍'
-  });
-});
+app.use('/mystore', routes);
 
 // start express server
 app.listen(PORT, () => {
