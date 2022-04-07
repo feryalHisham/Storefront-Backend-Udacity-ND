@@ -25,4 +25,18 @@ export class ProductModel {
       throw new Error(`Error retreiving product with id ${id}`);
     }
   }
+
+  async create(product: Product): Promise<number> {
+    try {
+      const db = await pool.connect();
+      const sql =
+        'INSERT INTO products (product_name, price, category) VALUES ($1, $2, $3) RETURNING id';
+
+      const result = await db.query(sql, [product.name, product.price, product.category]);
+      db.release();
+      return result.rows[0].id;
+    } catch (error) {
+      throw new Error("Couldn't create product");
+    }
+  }
 }
