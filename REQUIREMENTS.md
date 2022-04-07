@@ -35,10 +35,10 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Product
 
-- id
-- product_name
-- price
-- [OPTIONAL] category
+- id `SERIAL PRIMARY KEY`
+- product_name ` VARCHAR(50)`
+- price `DECIMAL(6,2)`
+- [OPTIONAL] category `VARCHAR(50)`
 
 #### User
 
@@ -54,3 +54,17 @@ These are the notes from a meeting with the frontend developer that describe wha
 - quantity of each product in the order
 - user_id
 - status of order (active or complete)
+
+## DataBase Schema
+
+#### Products Table
+
+```
+CREATE TABLE products(
+    id SERIAL PRIMARY KEY,
+    product_name VARCHAR(50) NOT NULL,
+    price DECIMAL(6,2) NOT NULL,
+    category VARCHAR(50)
+);
+
+```
