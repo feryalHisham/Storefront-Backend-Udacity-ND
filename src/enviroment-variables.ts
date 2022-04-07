@@ -9,7 +9,9 @@ const {
   POSTGRES_DB,
   POSTGRES_DB_TEST,
   POSTGRES_USER,
-  POSTGRES_PASSWORD
+  POSTGRES_PASSWORD,
+  PEPPER,
+  SALT_ROUNDS
 } = process.env;
 
 export const DBConfigs = {
@@ -22,3 +24,8 @@ export const DBConfigs = {
 export const ServerPost = PORT;
 
 export const env = ENV;
+
+export const bcryptConfigs = {
+  pepper: PEPPER,
+  salt: parseInt(SALT_ROUNDS as unknown as string)
+};

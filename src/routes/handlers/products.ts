@@ -6,7 +6,7 @@ const productModel = new ProductModel();
 
 prouductsRoute.get(
   '/',
-  async (_: express.Request, res: express.Response, next: NextFunction): Promise<void> => {
+  async (_req: express.Request, res: express.Response, next: NextFunction): Promise<void> => {
     try {
       const productsList = await productModel.index();
       res.json(productsList);

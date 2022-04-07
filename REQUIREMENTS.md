@@ -24,7 +24,19 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 - Index [token required]
 - Show [token required]
-- Create N[token required]
+- Create [token required]
+  - method: `POST`
+  - endpoint: `mystore/users/adduser`:
+  - request body:
+    ```yaml
+    {
+      'firstname': 'FIRST_NAME',
+      'lastname': 'LAST_NAME',
+      'email': 'useremail@email.com',
+      'password': 'mypassword'
+    }
+    ```
+  - response: Success message with created user id
 
 #### Orders
 
@@ -35,17 +47,18 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Product
 
-- id `SERIAL PRIMARY KEY`
-- product_name ` VARCHAR(50)`
-- price `DECIMAL(6,2)`
-- [OPTIONAL] category `VARCHAR(50)`
+- id: `SERIAL PRIMARY KEY`
+- product_name: `VARCHAR(50)`
+- price: `DECIMAL(6,2)`
+- category: `VARCHAR(50)`
 
 #### User
 
-- id
-- firstName
-- lastName
-- password
+- id: `SERIAL PRIMARY KEY`
+- firstName: `VARCHAR(50)`
+- lastName: `VARCHAR(50)`
+- email: `VARCHAR(50) UNIQUE`
+- user_password: `VARCHAR(225)`
 
 #### Orders
 
@@ -67,4 +80,16 @@ CREATE TABLE products(
     category VARCHAR(50)
 );
 
+```
+
+#### Users Table
+
+```
+CREATE TABLE users (
+ id SERIAL PRIMARY KEY,
+ firstname VARCHAR(50) NOT NULL,
+ lastname VARCHAR(50) NOT NULL,
+ email VARCHAR(50) UNIQUE NOT NULL,
+ user_password VARCHAR(225) NOT NULL
+);
 ```
