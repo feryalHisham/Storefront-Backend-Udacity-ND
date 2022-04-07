@@ -23,10 +23,16 @@ These are the notes from a meeting with the frontend developer that describe wha
 #### Users
 
 - Index [token required]
+  - method: `GET`
+  - endpoint: `mystore/users`
+  - response: Array of `Users`
 - Show [token required]
+  - method: `GET`
+  - endpoint: `mystore/users/:id`
+  - response: `User`
 - Create [token required]
   - method: `POST`
-  - endpoint: `mystore/users/adduser`:
+  - endpoint: `mystore/users/adduser`
   - request body:
     ```yaml
     {
