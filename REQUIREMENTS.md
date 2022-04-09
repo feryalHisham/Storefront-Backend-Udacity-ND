@@ -46,6 +46,18 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 
+- Create
+  - method: `POST`
+  - endpoint: `mystore/orders/addorder`
+  - request body:
+    ```yaml
+    {
+      'userId': 2,
+      'status': 'active',
+      'products': [{ 'productId': 1, 'quantity': 20 }, { 'productId': 2, 'quantity': 10 }]
+    }
+    ```
+  - response: Success message with created order id
 - Current Order by user (args: user id)[token required]
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
@@ -68,11 +80,15 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+- id `SERIAL PRIMARY KEY`
+- user_id `BIGINT REFERENCES users(id)`
+- status of order (active or complete) `VARCHAR(20)`
+
+#### Order_Products
+
+- order_id `BIGINT REFERENCES orders(id)`
+- product_id `BIGINT REFERENCES products(id)`
+- quantity `INTEGER`
 
 ## DataBase Schema
 
@@ -97,5 +113,26 @@ CREATE TABLE users (
  lastname VARCHAR(50) NOT NULL,
  email VARCHAR(50) UNIQUE NOT NULL,
  user_password VARCHAR(225) NOT NULL
+);
+```
+
+#### Orders Table
+
+```
+CREATE TABLE orders (
+    id SERIAL PRIMARY KEY,
+    user_id BIGINT REFERENCES users(id),
+    order_status  VARCHAR(20)
+);
+```
+
+#### Order Product Table to represent the Many-to-Many relationship between orders and products
+
+```
+CREATE TABLE order_product (
+    id SERIAL PRIMARY KEY,
+    order_id BIGINT REFERENCES orders(id),
+    product_id BIGINT REFERENCES products(id),
+    quantity INTEGER NOT NULL
 );
 ```
