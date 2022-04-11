@@ -1,28 +1,30 @@
-import { PoolClient } from 'pg';
 import pool from '../../database/database';
 import { ProductInOrder } from '../order-product/product-in-order.type';
+import { OrderResponse } from './order-response.type';
 import { Order } from './order.type';
 
 export class OrderModel {
-  async index(): Promise<Order[]> {
+  async index(): Promise<OrderResponse[]> {
     try {
       const db = await pool.connect();
-      const sql = 'SELECT * FROM orders';
+      const sql =
+        'SELECT * FROM orders INNER JOIN order_product ON orders.id = order_product.order_id';
       const result = await db.query(sql);
       db.release();
-      return result.rows;
+      return result.rows.map((res) => this.mapToResponse(res));
     } catch (error) {
-      throw new Error('Error retreiving orders');
+      throw new Error(`Error retreiving orders: ${error}`);
     }
   }
 
-  async show(id: string): Promise<Order> {
+  async show(id: string): Promise<OrderResponse> {
     try {
       const db = await pool.connect();
-      const sql = 'SELECT * FROM orders WHERE id=($1)';
+      const sql =
+        'SELECT * FROM orders INNER JOIN order_product ON orders.id = order_product.order_id WHERE orders.id=($1)';
       const result = await db.query(sql, [id]);
       db.release();
-      return result.rows[0];
+      return this.mapToResponse(result.rows[0]);
     } catch (err) {
       throw new Error(`Error retreiving order with id ${id}`);
     }
@@ -41,7 +43,6 @@ export class OrderModel {
 
       return result.rows[0].id;
     } catch (error) {
-      console.log(error);
       throw new Error(`Couldn't create order: ${error}`);
     }
   }
@@ -55,5 +56,25 @@ export class OrderModel {
     } catch (error) {
       throw new Error(`Couldn't add product ${product.productId} to order ${orderId}: ${error}`);
     }
+  }
+
+  private mapToResponse(order: {
+    id: number;
+    user_id: number;
+    order_status: string;
+    order_id: number;
+    product_id: number;
+    quantity: number;
+  }): OrderResponse {
+    const orderResponse: OrderResponse = {
+      id: order.id,
+      userId: order.user_id,
+      productId: order.product_id,
+      orderId: order.order_id,
+      orderStatus: order.order_status,
+      quantity: order.quantity
+    };
+
+    return orderResponse;
   }
 }

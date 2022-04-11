@@ -58,7 +58,93 @@ These are the notes from a meeting with the frontend developer that describe wha
     }
     ```
   - response: Success message with created order id
-- Current Order by user (args: user id)[token required]
+- Index
+  - method: `GET`
+  - endpoint: `mystore/orders`
+  - response:
+    ```yaml
+    [
+      {
+        'id': 1,
+        'userId': '1',
+        'productId': '1',
+        'orderId': '1',
+        'orderStatus': 'active',
+        'quantity': 2
+      },
+      {
+        'id': 2,
+        'userId': '1',
+        'productId': '2',
+        'orderId': '1',
+        'orderStatus': 'active',
+        'quantity': 4
+      }
+    ]
+    ```
+- Show
+  - method: `GET`
+  - endpoint: `mystore/orders/:id`
+  - response:
+    ```yaml
+    {
+      'id': 1,
+      'userId': '1',
+      'productId': '1',
+      'orderId': '1',
+      'orderStatus': 'active',
+      'quantity': 2
+    }
+    ```
+- Get current orders by user [token required]
+  - method: `GET`
+  - endpoint: `mystore//userorders/:userid`
+  - response:
+    ```yaml
+    {
+      'userId': '2',
+      'firstname': 'FIRST',
+      'lastname': 'LAST',
+      'orders':
+        [
+          {
+            'orderId': '2',
+            'orderStatus': 'active',
+            'products':
+              [
+                {
+                  'id': '1',
+                  'name': 'product1',
+                  'price': '20.00',
+                  'category': 'toys',
+                  'quantity': 20
+                },
+                {
+                  'id': '2',
+                  'name': 'product2',
+                  'price': '300.00',
+                  'category': 'bags',
+                  'quantity': 10
+                }
+              ]
+          },
+          {
+            'orderId': '3',
+            'orderStatus': 'complete',
+            'products':
+              [
+                {
+                  'id': '1',
+                  'name': 'product1',
+                  'price': '20.00',
+                  'category': 'toys',
+                  'quantity': 40
+                }
+              ]
+          }
+        ]
+    }
+    ```
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
 ## Data Shapes
