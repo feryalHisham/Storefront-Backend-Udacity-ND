@@ -11,7 +11,8 @@ const {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   PEPPER,
-  SALT_ROUNDS
+  SALT_ROUNDS,
+  JWT_SECRET
 } = process.env;
 
 export const DBConfigs = {
@@ -29,3 +30,5 @@ export const bcryptConfigs = {
   pepper: PEPPER,
   salt: parseInt(SALT_ROUNDS as unknown as string)
 };
+
+export const JWTSecret = JWT_SECRET as unknown as string;

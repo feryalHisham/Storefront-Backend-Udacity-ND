@@ -147,6 +147,17 @@ These are the notes from a meeting with the frontend developer that describe wha
     ```
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
+#### Authentication
+
+- Authenticate a user in order to get a JWT token
+  - method: `POST`
+  - endpoint: `mystore/authenticate`
+  - request body:
+    ```yaml
+    { 'email': 'test1@email.com', 'password': 'mypassword' }
+    ```
+  - response: a JWT token
+
 ## Data Shapes
 
 #### Product
