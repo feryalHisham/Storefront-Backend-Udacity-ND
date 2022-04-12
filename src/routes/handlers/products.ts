@@ -1,4 +1,5 @@
 import express, { NextFunction } from 'express';
+import verifyJWT from '../../middlewares/verify-jwt.middleware';
 import { ProductModel } from '../../models/product/product.model';
 import { Product } from '../../models/product/product.type';
 
@@ -31,6 +32,7 @@ prouductsRoute.get(
 
 prouductsRoute.post(
   '/addproduct',
+  verifyJWT,
   async (req: express.Request, res: express.Response, next: NextFunction): Promise<void> => {
     try {
       if (req.body) {
