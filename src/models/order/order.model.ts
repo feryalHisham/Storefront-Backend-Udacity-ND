@@ -68,9 +68,9 @@ export class OrderModel {
   }): OrderResponse {
     const orderResponse: OrderResponse = {
       id: order.id,
-      userId: order.user_id,
-      productId: order.product_id,
-      orderId: order.order_id,
+      userId: +order.user_id,
+      productId: +order.product_id,
+      orderId: +order.order_id,
       orderStatus: order.order_status,
       quantity: order.quantity
     };

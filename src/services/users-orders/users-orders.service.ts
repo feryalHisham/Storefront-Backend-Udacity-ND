@@ -57,14 +57,14 @@ export class UsersOrdersService {
   ): UserOrders {
     const orders = new Array<OrderWithProducts>();
     const userOrder: UserOrders = {
-      userId: ordersResult[0].user_id,
+      userId: +ordersResult[0].user_id,
       firstname: ordersResult[0].firstname,
       lastname: ordersResult[0].lastname,
       orders: orders
     };
     ordersResult.forEach((order, index) => {
       const product: Product & { quantity: number } = {
-        id: order.product_id,
+        id: +order.product_id,
         name: order.product_name,
         price: order.price,
         category: order.category,
@@ -74,7 +74,7 @@ export class UsersOrdersService {
         const products = new Array<Product & { quantity: number }>();
         products.push(product);
         const orderWithProducts: OrderWithProducts = {
-          orderId: order.order_id,
+          orderId: +order.order_id,
           orderStatus: order.order_status,
           products: products
         };
