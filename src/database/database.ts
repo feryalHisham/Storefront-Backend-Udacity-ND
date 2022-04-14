@@ -11,6 +11,7 @@ const pool = new Pool({
 });
 
 pool.on('error', (error) => {
+  // eslint-disable-next-line no-console
   console.log('Error on Connection to BD', error);
 });
 

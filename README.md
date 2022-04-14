@@ -1,54 +1,161 @@
-# Storefront Backend Project
+# Image Processing API
 
-## Getting Started
+## Overview
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+A backend API for a store that has products and users. It provides API endpoints to:
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+- Retrieve all products
+- Retrieve product with specific id
+- Add product
+- Retrieve all users
+- Retrieve user with specific id
+- Add user
+- Create order
+- Retrieve all orders
+- Retrieve order with specific id
+- Retrieve all orders associated with specific user
+- Authenticate user
 
-## Steps to Completion
+### Prerequisites
 
-### 1. Plan to Meet Requirements
+Before you can run this project you need to install the following:
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+- [Node.js](https://nodejs.org/en/download/)
+- Check that Node.js is installed by typing `node --version` in the terminal (or cmd)
+- [Postgres](https://www.postgresql.org/download/)
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+### Install the dependencies
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+Clone the project and in the root directory open the terminal and type `npm install` to install the needed dependencies to run the project
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+### Setup environment and Database
 
-### 2.  DB Creation and Migrations
+- Create a `.env` file in the root directory to add the required environment variables as below
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+  ```bash
+  # Server listening at port 3000
+  PORT=3000
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+  # default env
+  ENV=DEV
 
-### 3. Models
+  # Database information
+  # Database host
+  POSTGRES_HOST=127.0.0.1
+  # Dev Database name
+  POSTGRES_DB=dev_db_name
+  # Test Database name
+  POSTGRES_DB_TEST=test_db_name
+  # Database username
+  POSTGRES_USER=postgres
+  # Database password
+  POSTGRES_PASSWORD=your-password
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+  # Pepper and salt for bcrypt
+  PEPPER=pepper-secret
+  SALT_ROUNDS=10
 
-### 4. Express Handlers
+  # secret for JWT
+  JWT_SECRET= jwt-secret
+  ```
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
+- Open the psql sell terminal and create two database for dev and test which are dev_db_name and test_db_name using the SQL queries `CREATE DATABASE dev_db_name;` `CREATE DATABASE test_db_name;`
 
-### 5. JWTs
+- Run migrations to create the database tables
+  ```bash
+  npx db-migrate up
+  ```
 
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
+### Start the server
 
-### 6. QA and `README.md`
+To start the server run the command `npm run dev`. The server is now up and listening on port 3000
 
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
+## How to call an API?
 
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
+Refer to [REQUIREMENTS.md](REQUIREMENTS.md) to find the list of all API endpoints with detailed information about each endpoint url, HTTP method and expected request and response.
+
+For example to call Index Products that gets all products, open your browser or postman and enter the url (http://localhost:3000/mystore/products).
+
+## Testing
+
+To run the specs use the command `npm run test`.
+
+## Formatting and Linting
+
+To apply prettier formatting run `npm run format`.
+To apply linting run `npm run lint`.
+
+## Implementation
+
+This project is developed with `TypeScript` and using:
+
+- [Node.js](https://nodejs.org/en/download/)
+- [Express](https://expressjs.com/)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [pg](https://www.npmjs.com/package/pg)
+- [db-migrate](https://www.npmjs.com/package/db-migrate)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+
+### Project structure and files
+
+```bash
+─src
+    │   enviroment-variables.ts # exports .env variables to be used across the application
+    │   index.ts
+    │
+    ├───database
+    │       database.ts  # Creates an instance of database pool
+    │
+    ├───middlewares
+    │       verify-jwt.middleware.ts
+    │
+    ├───models
+    │   ├───order
+    │   │       order-response.type.ts
+    │   │       order.model.ts
+    │   │       order.type.ts
+    │   │
+    │   ├───order-product
+    │   │       product-in-order.type.ts
+    │   │
+    │   ├───product
+    │   │       product.model.ts
+    │   │       product.type.ts
+    │   │
+    │   └───user
+    │           user.model.ts
+    │           user.type.ts
+    │
+    ├───routes
+    │   │   index.ts
+    │   │
+    │   └───handlers
+    │           authenticate.ts
+    │           orders.ts
+    │           products.ts
+    │           users-orders.ts
+    │           users.ts
+    │
+    ├───services
+    │   ├───authentication
+    │   │       authentication.service.ts
+    │   │
+    │   └───users-orders # to handle the request of getting user's orders
+    │           order-with-products.type.ts
+    │           user-orders.type.ts
+    │           users-orders.service.ts
+    │
+    ├───tests
+    │   │   orders-endpoints.spec.ts
+    │   │   orders-model.spec.ts
+    │   │   products-endpoints.spec.ts
+    │   │   products-model.spec.ts
+    │   │   user-model.spec.ts
+    │   │   users-endpoints.spec.ts
+    │   │
+    │   └───helpers
+    │           reporter.ts
+    │
+    └───utils
+            utilities.ts
+```
