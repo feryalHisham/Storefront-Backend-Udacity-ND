@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx tsc && jasmine",
+    "test": "set ENV=test && npm run build && npx db-migrate up --env test && jasmine && npx db-migrate reset",
     "dev": "nodemon --exec npx ts-node ./src/index.ts",
     "clean": "rimraf build/",
-    "build": "yarn clean && npx tsc",
+    "build": "npm run clean && npx tsc",
     "start": "npm run build && nodemon build/index.js",
     "format": "prettier --write src/**/*.ts",
     "lint": "eslint . --ext .ts"

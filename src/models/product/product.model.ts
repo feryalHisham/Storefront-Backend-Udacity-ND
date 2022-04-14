@@ -5,7 +5,7 @@ export class ProductModel {
   async index(): Promise<Product[]> {
     try {
       const db = await pool.connect();
-      const sql = 'SELECT * FROM products';
+      const sql = 'SELECT id, product_name as name, price, category FROM products';
       const result = await db.query(sql);
       db.release();
       return result.rows;
@@ -17,7 +17,7 @@ export class ProductModel {
   async show(id: string): Promise<Product> {
     try {
       const db = await pool.connect();
-      const sql = 'SELECT * FROM products WHERE id=($1)';
+      const sql = 'SELECT id, product_name as name, price, category FROM products WHERE id=($1)';
       const result = await db.query(sql, [id]);
       db.release();
       return result.rows[0];

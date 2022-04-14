@@ -6,7 +6,7 @@ const request = supertest(app);
 
 describe('Test endpoint response', () => {
   it('test hello world endpoint', async () => {
-    const response = await request.get('/');
+    const response = await request.get('/mystore/products');
     expect(response.status).toBe(200);
   });
 });

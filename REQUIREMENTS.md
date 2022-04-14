@@ -21,8 +21,9 @@ These are the notes from a meeting with the frontend developer that describe wha
   - endpoint: `mystore/products/:id` where `id` is the id of the product you wish to retrieve
   - response: `Product`
 - Create [token required]
-- [OPTIONAL] Top 5 most popular products
-- [OPTIONAL] Products by category (args: product category)
+  - method: `POST`
+  - endpoint: `mystore/products/addproduct`
+  - response: Success message with created product id
 
 #### Users
 
@@ -50,7 +51,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 
-- Create
+- Create [token required]
   - method: `POST`
   - endpoint: `mystore/orders/addorder`
   - request body:
@@ -62,7 +63,7 @@ These are the notes from a meeting with the frontend developer that describe wha
     }
     ```
   - response: Success message with created order id
-- Index
+- Index [token required]
   - method: `GET`
   - endpoint: `mystore/orders`
   - response:
@@ -86,7 +87,7 @@ These are the notes from a meeting with the frontend developer that describe wha
       }
     ]
     ```
-- Show
+- Show [token required]
   - method: `GET`
   - endpoint: `mystore/orders/:id`
   - response:
@@ -149,7 +150,6 @@ These are the notes from a meeting with the frontend developer that describe wha
         ]
     }
     ```
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
 #### Authentication
 
