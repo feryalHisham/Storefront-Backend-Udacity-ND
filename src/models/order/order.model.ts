@@ -17,14 +17,14 @@ export class OrderModel {
     }
   }
 
-  async show(id: string): Promise<OrderResponse> {
+  async show(id: string): Promise<OrderResponse[]> {
     try {
       const db = await pool.connect();
       const sql =
         'SELECT * FROM orders INNER JOIN order_product ON orders.id = order_product.order_id WHERE orders.id=($1)';
       const result = await db.query(sql, [id]);
       db.release();
-      return this.mapToResponse(result.rows[0]);
+      return result.rows.map((res) => this.mapToResponse(res));
     } catch (err) {
       throw new Error(`Error retreiving order with id ${id}`);
     }

@@ -83,7 +83,23 @@ These are the notes from a meeting with the frontend developer that describe wha
         'productId': '2',
         'orderId': '1',
         'orderStatus': 'active',
+        'quantity': 10
+      },
+      {
+        'id': 3,
+        'userId': '1',
+        'productId': '1',
+        'orderId': '2',
+        'orderStatus': 'active',
         'quantity': 4
+      },
+      {
+        'id': 4,
+        'userId': '1',
+        'productId': '2',
+        'orderId': '2',
+        'orderStatus': 'active',
+        'quantity': 3
       }
     ]
     ```
@@ -92,18 +108,28 @@ These are the notes from a meeting with the frontend developer that describe wha
   - endpoint: `mystore/orders/:id`
   - response:
     ```yaml
-    {
-      'id': 1,
-      'userId': '1',
-      'productId': '1',
-      'orderId': '1',
-      'orderStatus': 'active',
-      'quantity': 2
-    }
+    [
+      {
+        'id': 1,
+        'userId': '1',
+        'productId': '1',
+        'orderId': '1',
+        'orderStatus': 'active',
+        'quantity': 2
+      },
+      {
+        'id': 2,
+        'userId': '1',
+        'productId': '2',
+        'orderId': '1',
+        'orderStatus': 'active',
+        'quantity': 1
+      }
+    ]
     ```
 - Get current orders by user [token required]
   - method: `GET`
-  - endpoint: `mystore//userorders/:userid`
+  - endpoint: `mystore/userorders/:userid`
   - response:
     ```yaml
     {

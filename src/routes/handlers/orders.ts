@@ -35,7 +35,6 @@ ordersRoute.post(
     try {
       if (req.body) {
         const newOrder = req.body as unknown as Order;
-        console.log(newOrder);
         const addedOrder = await orderModel.create(newOrder);
         res.json(`Order successfully created with id ${addedOrder}`);
       } else {
