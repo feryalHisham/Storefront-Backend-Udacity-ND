@@ -10,7 +10,7 @@ const routes = express.Router();
 
 // When browser requests 'resizeImage' route the resizeImageRoute will handle it
 routes.use('/products', prouductsRoute);
-routes.use('/users', verifyJWT, usersRoute);
+routes.use('/users', usersRoute);
 routes.use('/orders', verifyJWT, ordersRoute);
 routes.use('/userorders', verifyJWT, usersOrders);
 routes.use('/authenticate', authRoute);

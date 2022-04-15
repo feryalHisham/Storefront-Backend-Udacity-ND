@@ -35,7 +35,7 @@ These are the notes from a meeting with the frontend developer that describe wha
   - method: `GET`
   - endpoint: `mystore/users/:id`
   - response: `User`
-- Create [token required]
+- Create
   - method: `POST`
   - endpoint: `mystore/users/adduser`
   - request body:

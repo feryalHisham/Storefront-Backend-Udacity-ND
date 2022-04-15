@@ -1,4 +1,5 @@
 import express, { NextFunction } from 'express';
+import verifyJWT from '../../middlewares/verify-jwt.middleware';
 import { UserModel } from '../../models/user/user.model';
 import { User } from '../../models/user/user.type';
 
@@ -29,6 +30,7 @@ usersRoute.post(
 
 usersRoute.get(
   '/',
+  verifyJWT,
   async (req: express.Request, res: express.Response, next: NextFunction): Promise<void> => {
     try {
       const usersList = await userModel.index();
@@ -41,6 +43,7 @@ usersRoute.get(
 
 usersRoute.get(
   '/:id',
+  verifyJWT,
   async (req: express.Request, res: express.Response, next: NextFunction): Promise<void> => {
     try {
       const user = await userModel.show(req.params.id);
